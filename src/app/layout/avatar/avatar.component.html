@@ -1,1 +1,9 @@
-<p>avatar works!</p>
+<div class="flex justify-center">
+  @if(imageUrl() !=null){
+  <img [src]="imageUrl()" alt="user-avatar" class="rounded-3xl avatar" [ngClass]="avatarSize()" />
+  } @else {
+  <div class="flex justify-center items-center unkown-user">
+    <fa-icon [icon]="'user'" class="text-black"></fa-icon>
+  </div>
+  }
+</div>

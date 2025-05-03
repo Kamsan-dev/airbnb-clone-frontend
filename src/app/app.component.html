@@ -1,7 +1,8 @@
-<h1 class="text-3xl font-bold">Hello world!</h1>
-
-<p-button>Toast</p-button>
-
-<p-calendar />
-
-<fa-icon [icon]="['fab', 'airbnb']"></fa-icon>
+<p-toast></p-toast>
+<app-navbar></app-navbar>
+<div class="grid gap-0 mb-5" [class.mx-8]="isListingView">
+  <div class="w-full mt-5">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<app-footer></app-footer>

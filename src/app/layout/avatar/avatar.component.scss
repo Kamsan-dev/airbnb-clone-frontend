@@ -1,0 +1,13 @@
+.avatar {
+  object-fit: contain;
+
+  &-sm {
+    width: 35.75px;
+    height: 35.75px;
+  }
+
+  &-xl {
+    width: 50px;
+    height: 50px;
+  }
+}
