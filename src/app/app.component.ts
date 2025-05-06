@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -17,6 +17,7 @@ import { MessageService } from 'primeng/api';
   imports: [RouterOutlet, ButtonModule, CalendarModule, FaIconComponent, NavbarComponent, FooterComponent, ToastModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
   private faIconLibrary: FaIconLibrary = inject(FaIconLibrary);

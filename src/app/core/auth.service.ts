@@ -14,7 +14,7 @@ export class AuthService {
 
   public location = inject(Location);
 
-  private notConnected = 'NOT_CONNECTED';
+  public notConnected = 'NOT_CONNECTED';
 
   private fetchUser$: WritableSignal<State<User>> = signal(State.Builder<User>().forSuccess({ email: this.notConnected }));
   public fetchUser = computed(() => this.fetchUser$());

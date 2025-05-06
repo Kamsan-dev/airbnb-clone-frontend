@@ -21,14 +21,16 @@
       </button>
     </div>
     <div class="sm:hidden md:flex justify-end">
+      @if(authService.isAuthenticated()){
       <a class="p-button p-button-link" (click)="(null)">Airbnb your home</a>
+      }
       <p-menu #menu [model]="currentMenuItems" [popup]="true" styleClass="rounded-xl mt-1"></p-menu>
       <button
         (click)="menu.toggle($event)"
         class="menu flex items-center justify-around ml-2 pl-3 p-2 border-gray-300 focus:shadow-none hover:shadow rounded-3xl bg-white p-button"
       >
         <fa-icon [icon]="'bars'" class="text-sm text-dark mr-3"></fa-icon>
-        <app-avatar [imageUrl]="" avatarSize="avatar-sm"></app-avatar>
+        <app-avatar [imageUrl]="user.imageUrl" avatarSize="avatar-sm"></app-avatar>
       </button>
     </div>
   </p-toolbar>
