@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit } from '@angular/core';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { LandlordListingService } from '../landlord-listing.service';
 import { ToastService } from '../../layout/toast.service';
@@ -12,13 +12,16 @@ import { CategoryName } from '../../layout/category/category.model';
 import { PriceVo } from '../model/listing-vo.model';
 import { CategoryStepComponent } from './category-step/category-step/category-step.component';
 import { CommonModule, JsonPipe } from '@angular/common';
+import { FooterStepComponent } from '../../shared/components/footer-step/footer-step.component';
+import { LocationStepComponent } from './location-step/location-step/location-step.component';
 
 @Component({
   selector: 'app-properties-create',
   standalone: true,
-  imports: [CategoryStepComponent, JsonPipe, CommonModule],
+  imports: [CategoryStepComponent, JsonPipe, CommonModule, FooterStepComponent, LocationStepComponent],
   templateUrl: './properties-create.component.html',
   styleUrl: './properties-create.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PropertiesCreateComponent {
   // constants
@@ -101,6 +104,11 @@ export class PropertiesCreateComponent {
     this.listenListingCreation();
   }
 
+  public createListing(): void {
+    this.loadingCreation = true;
+    this.listingService.create(this.newListing);
+  }
+
   public listenListingCreation(): void {
     effect(() => {
       let newCreatedListing = this.listingService.createSig();
@@ -118,47 +126,6 @@ export class PropertiesCreateComponent {
         this.router.navigate(['landlord', 'properties']);
       }
     });
-  }
-
-  private loadSteps(): Step[] {
-    return [
-      {
-        id: this.CATEGORY,
-        idNext: this.LOCATION,
-        idPrevious: null,
-        isValid: false,
-      },
-      {
-        id: this.LOCATION,
-        idNext: this.INFO,
-        idPrevious: this.CATEGORY,
-        isValid: false,
-      },
-      {
-        id: this.INFO,
-        idNext: this.PHOTOS,
-        idPrevious: this.LOCATION,
-        isValid: false,
-      },
-      {
-        id: this.PHOTOS,
-        idNext: this.DESCRIPTION,
-        idPrevious: this.INFO,
-        isValid: false,
-      },
-      {
-        id: this.DESCRIPTION,
-        idNext: this.PRICE,
-        idPrevious: this.PHOTOS,
-        isValid: false,
-      },
-      {
-        id: this.PRICE,
-        idNext: null,
-        idPrevious: this.DESCRIPTION,
-        isValid: false,
-      },
-    ];
   }
 
   public nextStep(): void {

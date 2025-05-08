@@ -1,6 +1,19 @@
 {{ newListing | json }}
+
+{{ currentStep | json }}
 <div class="px-4">
   @switch(this.currentStep.id){ @case (CATEGORY) {
   <app-category-step [categoryName]="newListing.category" (categoryChange)="onCategoryChange($event)" (stepValidityChange)="onValidityChange($event)"></app-category-step>
+
+  } @case (LOCATION) {
+  <app-location-step [location]="newListing.location" (locationChange)="onLocationChange($event)" (stepValidityChange)="onValidityChange($event)"></app-location-step>
   } }
 </div>
+<app-footer-step
+  [currentStep]="currentStep"
+  [isAllStepsValid]="isAllStepsValid()"
+  [loading]="loadingCreation"
+  (next)="nextStep()"
+  (previous)="previousStep()"
+  (finish)="createListing()"
+/>

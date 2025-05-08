@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, input, InputSignal, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, input, InputSignal, OnInit, Output } from '@angular/core';
 import { Category, CategoryName } from '../../../../layout/category/category.model';
 import { CategoryService } from '../../../../layout/category/category.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
   imports: [FontAwesomeModule, CommonModule],
   templateUrl: './category-step.component.html',
   styleUrl: './category-step.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryStepComponent implements OnInit {
   public categoryName: InputSignal<CategoryName> = input.required<CategoryName>();
