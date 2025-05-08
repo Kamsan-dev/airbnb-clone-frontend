@@ -1,0 +1,17 @@
+{{ categoryName() | json }}
+<div class="categories flex flex-col items-center">
+  <h1>Which of these best describe your place ?</h1>
+  <div class="flex flex-wrap justify-center items-center">
+    @for (categoryToDisplay of categories; track categoryToDisplay.technicalName){ @if(categoryToDisplay.technicalName !== 'ALL'){
+    <div
+      class="card-step-1 cursor-pointer p-4 m-2 rounded-lg border border-gray-200 hover:border-gray-800 flex flex-col items-center"
+      (click)="onSelectCategory(categoryToDisplay.technicalName)"
+      [class.category-selected]="categoryName() === categoryToDisplay.technicalName"
+    >
+      <fa-icon class="mb-2" [icon]="categoryToDisplay.icon" size="2x"></fa-icon>
+      <div class="font-bold whitespace-nowrap">{{ categoryToDisplay.displayName }}</div>
+    </div>
+
+    } }
+  </div>
+</div>

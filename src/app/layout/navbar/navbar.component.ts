@@ -3,11 +3,12 @@ import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MenuModule } from 'primeng/menu';
 import { ToolbarModule } from 'primeng/toolbar';
 import { AuthService } from '../../core/auth.service';
 import { User } from '../../core/model/user.model';
+import { PropertiesCreateComponent } from '../../landlord/properties-create/properties-create.component';
 import { AvatarComponent } from '../avatar/avatar.component';
 import { CategoryComponent } from '../category/category.component';
 import { ToastService } from '../toast.service';
@@ -26,8 +27,9 @@ export class NavbarComponent implements OnInit {
   public guests: string = 'Add guests';
   public dates: string = 'Any week';
 
-  private toastService: ToastService = inject(ToastService);
   public authService = inject(AuthService);
+  public dialogService = inject(DialogService);
+  public ref: DynamicDialogRef | undefined;
 
   public currentMenuItems: MenuItem[] | undefined = [];
   public user: User = { email: this.authService.notConnected };
@@ -45,7 +47,7 @@ export class NavbarComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.authService.fetch(false);
+    this.authService.fetchUserData(false);
   }
 
   private loadMenu(): any {
@@ -85,5 +87,19 @@ export class NavbarComponent implements OnInit {
   }
   private hasToBeLandlord() {
     return this.authService.hasAnyAuthority(['ROLE_LANDLORD']);
+  }
+
+  //#region events
+
+  public onOpenNewListing(event: MouseEvent | TouchEvent): void {
+    event.stopImmediatePropagation();
+    this.ref = this.dialogService.open(PropertiesCreateComponent, {
+      width: '60%',
+      header: 'Airbnb your home',
+      closable: true,
+      focusOnShow: true,
+      modal: true,
+      showHeader: true,
+    });
   }
 }

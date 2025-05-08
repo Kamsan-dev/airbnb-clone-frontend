@@ -20,7 +20,7 @@ export class AuthService {
   public fetchUser = computed(() => this.fetchUser$());
 
   /* Get info of the authenticated user */
-  public fetch(forceResync: boolean): void {
+  public fetchUserData(forceResync: boolean): void {
     this.fetchHttpUser(forceResync).subscribe({
       next: (user: User) => this.fetchUser$.set(State.Builder<User>().forSuccess(user)),
       error: (error: HttpErrorResponse) => {
