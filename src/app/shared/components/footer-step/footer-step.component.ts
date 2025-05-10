@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, input, Output } from '@angular/core';
+import { JsonPipe } from '@angular/common';
+import { Component, EventEmitter, input, Output } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Step } from '../../../landlord/properties-create/step.model';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-footer-step',

@@ -1,0 +1,19 @@
+<div class="mb-3">
+  <h1 class="mb-1">Now, let's give your house a title and a description</h1>
+  <h2 class="mt-0">Short titles work best. Have fun with it. You can change it anytime.</h2>
+
+  <form [formGroup]="formDecription">
+    <input name="title" placeholder="Title" class="w-full p-inputtext-lg" pInputText type="text" formControlName="title" />
+    @if (formDecription.get('title')?.invalid && formDecription.get('title')?.dirty) {
+    <small id="title-required" class="text-primary">Title is required</small>
+    } @else {
+    <div class="placeholder-validation"></div>
+    }
+    <textarea name="description" placeholder="Summary.." class="w-full mt-2" type="textarea" pInputTextarea formControlName="description" rows="5" cols="30"></textarea>
+    @if (formDecription.get('description')?.invalid && formDecription.get('description')?.dirty) {
+    <small id="description-required" class="text-primary">Description is required</small>
+    } @else {
+    <div class="placeholder-validation"></div>
+    }
+  </form>
+</div>

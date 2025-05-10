@@ -16,11 +16,23 @@ import { FooterStepComponent } from '../../shared/components/footer-step/footer-
 import { LocationStepComponent } from './location-step/location-step/location-step.component';
 import { InfoStepComponent } from './info-step/info-step.component';
 import { PictureStepComponent } from './picture-step/picture-step/picture-step.component';
+import { DescriptionStepComponent } from './description-step/description-step/description-step.component';
+import { PriceStepComponent } from './price-step/price-step/price-step.component';
 
 @Component({
   selector: 'app-properties-create',
   standalone: true,
-  imports: [CategoryStepComponent, JsonPipe, CommonModule, FooterStepComponent, LocationStepComponent, InfoStepComponent, PictureStepComponent],
+  imports: [
+    CategoryStepComponent,
+    JsonPipe,
+    CommonModule,
+    FooterStepComponent,
+    LocationStepComponent,
+    InfoStepComponent,
+    PictureStepComponent,
+    DescriptionStepComponent,
+    PriceStepComponent,
+  ],
   templateUrl: './properties-create.component.html',
   styleUrl: './properties-create.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

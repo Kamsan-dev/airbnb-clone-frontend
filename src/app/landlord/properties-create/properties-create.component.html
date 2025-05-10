@@ -1,6 +1,3 @@
-{{ newListing | json }}
-
-{{ currentStep | json }}
 <div class="px-4">
   @switch(this.currentStep.id){ @case (CATEGORY) {
   <app-category-step [categoryName]="newListing.category" (categoryChange)="onCategoryChange($event)" (stepValidityChange)="onValidityChange($event)"></app-category-step>
@@ -15,6 +12,14 @@
   </div>
   } @case (PHOTOS) {
   <app-picture-step [pictures]="newListing.pictures" (stepValidityChange)="onValidityChange($event)" (pictureChange)="onPictureChange($event)"></app-picture-step>
+  } @case (DESCRIPTION) {
+  <app-description-step
+    [description]="newListing.description"
+    (descriptionChange)="onDescriptionChange($event)"
+    (stepValidityChange)="onValidityChange($event)"
+  ></app-description-step>
+  } @case (PRICE){
+  <app-price-step [price]="newListing.price" (priceChange)="onPriceChange($event)" (stepValidityChange)="onValidityChange($event)"></app-price-step>
   }}
 </div>
 <app-footer-step

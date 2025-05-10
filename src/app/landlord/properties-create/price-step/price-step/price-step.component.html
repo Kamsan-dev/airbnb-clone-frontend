@@ -1,0 +1,20 @@
+<div class="mb-3">
+  <h1 class="mb-1">Now,set your price</h1>
+  <h2 class="mt-0">You can change it anytime.</h2>
+
+  <form [formGroup]="formPrice">
+    <span class="p-input-icon-left w-full relative">
+      <fa-icon icon="dollar-sign" class="dollar absolute top-0"></fa-icon>
+      <input name="price" placeholder="Price" class="w-full p-inputtext-lg" pInputText type="text" formControlName="price" />
+      @if (formPrice.get('price')?.invalid && formPrice.get('price')?.dirty) { @if (formPrice.get('price')?.hasError('required')) {
+      <small class="text-primary">Price is required</small>
+      } @if (formPrice.get('price')?.hasError('pattern')) {
+      <small class="text-primary">Price must be a valid number.</small>
+      } @if (formPrice.get('price')?.hasError('min')) {
+      <small class="text-primary">Price must be greater than 0</small>
+      } } @else {
+      <div class="placeholder-validation"></div>
+      }
+    </span>
+  </form>
+</div>
