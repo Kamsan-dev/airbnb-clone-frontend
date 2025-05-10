@@ -1,4 +1,4 @@
-import { Component, EventEmitter, input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, input, Output } from '@angular/core';
 import { NewListingInfo } from '../../model/listing.model';
 import { InfoStepControlComponent } from './info-step-control/info-step-control/info-step-control.component';
 
@@ -9,6 +9,7 @@ export type Control = 'GUESTS' | 'BEDROOMS' | 'BEDS' | 'BATHS';
   imports: [InfoStepControlComponent],
   templateUrl: './info-step.component.html',
   styleUrl: './info-step.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InfoStepComponent {
   infos = input.required<NewListingInfo>();

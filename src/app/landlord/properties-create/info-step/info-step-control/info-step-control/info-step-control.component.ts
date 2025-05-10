@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, input, Output } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ButtonModule } from 'primeng/button';
 
@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
   imports: [ButtonModule, CommonModule, FontAwesomeModule],
   templateUrl: './info-step-control.component.html',
   styleUrl: './info-step-control.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InfoStepControlComponent {
   title = input.required<string>();

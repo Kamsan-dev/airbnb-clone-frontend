@@ -14,11 +14,13 @@ import { CategoryStepComponent } from './category-step/category-step/category-st
 import { CommonModule, JsonPipe } from '@angular/common';
 import { FooterStepComponent } from '../../shared/components/footer-step/footer-step.component';
 import { LocationStepComponent } from './location-step/location-step/location-step.component';
+import { InfoStepComponent } from './info-step/info-step.component';
+import { PictureStepComponent } from './picture-step/picture-step/picture-step.component';
 
 @Component({
   selector: 'app-properties-create',
   standalone: true,
-  imports: [CategoryStepComponent, JsonPipe, CommonModule, FooterStepComponent, LocationStepComponent],
+  imports: [CategoryStepComponent, JsonPipe, CommonModule, FooterStepComponent, LocationStepComponent, InfoStepComponent, PictureStepComponent],
   templateUrl: './properties-create.component.html',
   styleUrl: './properties-create.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -7,7 +7,15 @@
 
   } @case (LOCATION) {
   <app-location-step [location]="newListing.location" (locationChange)="onLocationChange($event)" (stepValidityChange)="onValidityChange($event)"></app-location-step>
-  } }
+  } @case (INFO){
+  <div class="mb-5">
+    <h1 class="mb-1">Share some basics about your place</h1>
+    <h2>You will be able to add more details later.</h2>
+    <app-info-step [infos]="newListing.infos" (stepValidityChange)="onValidityChange($event)" (infoChange)="onInfoChange($event)"></app-info-step>
+  </div>
+  } @case (PHOTOS) {
+  <app-picture-step [pictures]="newListing.pictures" (stepValidityChange)="onValidityChange($event)" (pictureChange)="onPictureChange($event)"></app-picture-step>
+  }}
 </div>
 <app-footer-step
   [currentStep]="currentStep"
