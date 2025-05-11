@@ -5,7 +5,7 @@ export const routes: Routes = [
   {
     path: 'landlord/properties',
     loadComponent: () => import('./landlord/list-properties/list-properties.component').then((m) => m.ListPropertiesComponent),
-    //canActivate: [authorityRouteAccess],
+    canActivate: [authorityRouteAccess],
     data: {
       authorities: ['ROLE_LANDLORD'],
     },

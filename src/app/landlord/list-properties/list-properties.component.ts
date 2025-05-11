@@ -40,7 +40,6 @@ export class ListPropertiesComponent implements OnInit, OnDestroy {
         if (this.landlordListingService.getAllSig().status === 'OK' && this.landlordListingService.getAllSig().value) {
           this.listings.set(this.landlordListingService.getAllSig().value);
           this.loadingFetchAll.set(false);
-          console.log('fetch all set to false');
         } else if (this.landlordListingService.getAllSig().status === 'ERROR') {
           this.toastService.send({
             severity: 'error',
@@ -55,8 +54,6 @@ export class ListPropertiesComponent implements OnInit, OnDestroy {
 
   private listenDeleteListing(): void {
     effect(() => {
-      console.log('before delete');
-      console.log(this.listings);
       const publicIdToDelete = this.landlordListingService.deleteSig();
       if (publicIdToDelete.status === 'OK' && publicIdToDelete.value) {
         const index = this.findIndexListingByPublicId(publicIdToDelete.value);
@@ -83,7 +80,6 @@ export class ListPropertiesComponent implements OnInit, OnDestroy {
 
   private fetchListings() {
     this.loadingFetchAll.set(true);
-    console.log('fetch all set to true');
     this.landlordListingService.getAll();
   }
 

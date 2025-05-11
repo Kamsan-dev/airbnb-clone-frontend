@@ -73,7 +73,6 @@ export class CardListingComponent {
   }
 
   onDeleteListing(listing: DisplayCardListing): void {
-    console.log('deleting' + listing);
     this.deleteListing.emit(listing);
   }
 
