@@ -1,6 +1,6 @@
 import { CategoryName } from '../../layout/category/category.model';
 import { BathsVo, BedroomsVo, BedsVo, DescriptionVo, GuestsVo, PriceVo, TitleVo } from './listing-vo.model';
-import { NewListingPicture } from './picture.model';
+import { DisplayPicture, NewListingPicture } from './picture.model';
 
 export interface NewListingInfo {
   guests: GuestsVo;
@@ -25,4 +25,12 @@ export interface Description {
 
 export interface CreatedListing {
   publicId: string;
+}
+export interface DisplayCardListing {
+  price: PriceVo;
+  location: string;
+  cover: DisplayPicture;
+  bookingCategory: CategoryName;
+  publicId: string;
+  loading: boolean;
 }

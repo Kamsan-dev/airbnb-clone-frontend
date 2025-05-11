@@ -1,30 +1,29 @@
-import { ChangeDetectionStrategy, Component, effect, inject, OnInit } from '@angular/core';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { LandlordListingService } from '../landlord-listing.service';
-import { ToastService } from '../../layout/toast.service';
-import { AuthService } from '../../core/auth.service';
+import { CommonModule, JsonPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Step } from './step.model';
-import { CreatedListing, Description, newListing, NewListingInfo } from '../model/listing.model';
-import { NewListingPicture } from '../model/picture.model';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AuthService } from '../../core/auth.service';
 import { State } from '../../core/model/state.mode';
 import { CategoryName } from '../../layout/category/category.model';
-import { PriceVo } from '../model/listing-vo.model';
-import { CategoryStepComponent } from './category-step/category-step/category-step.component';
-import { CommonModule, JsonPipe } from '@angular/common';
+import { ToastService } from '../../layout/toast.service';
 import { FooterStepComponent } from '../../shared/components/footer-step/footer-step.component';
-import { LocationStepComponent } from './location-step/location-step/location-step.component';
-import { InfoStepComponent } from './info-step/info-step.component';
-import { PictureStepComponent } from './picture-step/picture-step/picture-step.component';
+import { LandlordListingService } from '../landlord-listing.service';
+import { PriceVo } from '../model/listing-vo.model';
+import { CreatedListing, Description, newListing, NewListingInfo } from '../model/listing.model';
+import { NewListingPicture } from '../model/picture.model';
+import { CategoryStepComponent } from './category-step/category-step/category-step.component';
 import { DescriptionStepComponent } from './description-step/description-step/description-step.component';
+import { InfoStepComponent } from './info-step/info-step.component';
+import { LocationStepComponent } from './location-step/location-step/location-step.component';
+import { PictureStepComponent } from './picture-step/picture-step/picture-step.component';
 import { PriceStepComponent } from './price-step/price-step/price-step.component';
+import { Step } from './step.model';
 
 @Component({
   selector: 'app-properties-create',
   standalone: true,
   imports: [
     CategoryStepComponent,
-    JsonPipe,
     CommonModule,
     FooterStepComponent,
     LocationStepComponent,

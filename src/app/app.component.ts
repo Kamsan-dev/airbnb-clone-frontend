@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   private faIconLibrary: FaIconLibrary = inject(FaIconLibrary);
   private toastService: ToastService = inject(ToastService);
   private messageService = inject(MessageService);
-  isListingView: boolean = false;
+  isListingView: boolean = true;
 
   public ngOnInit(): void {
     this.initFontAwesome();

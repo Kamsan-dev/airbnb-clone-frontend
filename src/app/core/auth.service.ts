@@ -65,7 +65,7 @@ export class AuthService {
 
   /** HTTP CALLS  **/
 
-  private fetchHttpUser(forceResync: boolean): Observable<User> {
+  public fetchHttpUser(forceResync: boolean): Observable<User> {
     return this.http.get<User>(`${environment.API_URL}/auth/get-authenticated-user?forceResync=${forceResync}`);
   }
 }
