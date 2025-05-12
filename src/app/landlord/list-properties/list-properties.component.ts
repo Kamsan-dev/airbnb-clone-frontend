@@ -93,6 +93,6 @@ export class ListPropertiesComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
   }
 }

@@ -146,7 +146,7 @@ export class CategoryService {
 
   constructor() {}
 
-  public onChangeCategory(category: Category): void {
+  public changeCategory(category: Category): void {
     this.changeCategory$.next(category);
   }
 

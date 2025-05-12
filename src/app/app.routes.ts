@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authorityRouteAccess } from './core/authority-route-access.guard';
+import { HomeComponent } from './home/home.component';
 
 export const routes: Routes = [
   {
@@ -9,5 +10,9 @@ export const routes: Routes = [
     data: {
       authorities: ['ROLE_LANDLORD'],
     },
+  },
+  {
+    path: '',
+    component: HomeComponent,
   },
 ];

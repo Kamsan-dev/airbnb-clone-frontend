@@ -21,7 +21,7 @@ export type cardModeType = 'landlord' | 'booking';
 export class CardListingComponent {
   listing = input.required<DisplayCardListing | BookedListing>();
 
-  cardMode = input.required<cardModeType>();
+  cardMode = input<cardModeType>();
 
   bookingListing: WritableSignal<BookedListing | undefined> = signal(undefined);
   cardListing: WritableSignal<DisplayCardListing | undefined> = signal(undefined);
