@@ -53,29 +53,33 @@ export class ListPropertiesComponent implements OnInit, OnDestroy {
   }
 
   private listenDeleteListing(): void {
-    effect(() => {
-      const publicIdToDelete = this.landlordListingService.deleteSig();
-      if (publicIdToDelete.status === 'OK' && publicIdToDelete.value) {
-        const index = this.findIndexListingByPublicId(publicIdToDelete.value);
-        this.listings()?.splice(index!, 1);
-        this.toastService.send({
-          severity: 'success',
-          summary: 'Deleted successfully',
-          detail: 'Listing has been deleted successfully',
-        });
-      } else if (publicIdToDelete.status === 'ERROR' && publicIdToDelete.value) {
-        /* Cancel loading animation if we couldn't delete properly the listing */
-        const index = this.findIndexListingByPublicId(publicIdToDelete.value);
-        this.listings()![index!].loading = false;
-        this.toastService.send({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Something went wrong when deleting this listing',
-        });
-      }
-      this.loadingDeletion = false;
-      this.ref.detectChanges();
-    });
+    effect(
+      () => {
+        const publicIdToDelete = this.landlordListingService.deleteSig();
+        if (publicIdToDelete.status === 'OK' && publicIdToDelete.value) {
+          const index = this.findIndexListingByPublicId(publicIdToDelete.value);
+          this.listings()?.splice(index!, 1);
+          this.toastService.send({
+            severity: 'success',
+            summary: 'Deleted successfully',
+            detail: 'Listing has been deleted successfully',
+          });
+          this.landlordListingService.resetDelete();
+        } else if (publicIdToDelete.status === 'ERROR' && publicIdToDelete.value) {
+          /* Cancel loading animation if we couldn't delete properly the listing */
+          const index = this.findIndexListingByPublicId(publicIdToDelete.value);
+          this.listings()![index!].loading = false;
+          this.toastService.send({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Something went wrong when deleting this listing',
+          });
+        }
+        this.loadingDeletion = false;
+        this.ref.detectChanges();
+      },
+      { allowSignalWrites: true }
+    );
   }
 
   private fetchListings() {

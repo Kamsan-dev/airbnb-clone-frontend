@@ -47,7 +47,7 @@ export class PropertiesCreateComponent {
   public PRICE = 'price';
 
   public dialogDynamicRef = inject(DynamicDialogRef);
-  public listingService = inject(LandlordListingService);
+  public landlordListingService = inject(LandlordListingService);
   public toastService = inject(ToastService);
   public userService = inject(AuthService);
   public router = inject(Router);
@@ -119,23 +119,26 @@ export class PropertiesCreateComponent {
 
   public createListing(): void {
     this.loadingCreation = true;
-    this.listingService.create(this.newListing);
+    this.landlordListingService.create(this.newListing);
   }
 
   public listenListingCreation(): void {
-    effect(() => {
-      let newCreatedListing = this.listingService.createSig();
-      if (newCreatedListing.status === 'OK') {
-        this.onCreateOk(newCreatedListing);
-      } else if (newCreatedListing.status === 'ERROR') {
-        this.onCreateError();
-      }
-    });
+    effect(
+      () => {
+        let newCreatedListing = this.landlordListingService.createSig();
+        if (newCreatedListing.status === 'OK') {
+          this.onCreateOk(newCreatedListing);
+        } else if (newCreatedListing.status === 'ERROR') {
+          this.onCreateError();
+        }
+      },
+      { allowSignalWrites: true }
+    );
   }
 
   public listenFetchUser() {
     effect(() => {
-      if (this.userService.fetchUser().status === 'OK' && this.listingService.createSig().status === 'OK') {
+      if (this.userService.fetchUser().status === 'OK' && this.landlordListingService.createSig().status === 'OK') {
         this.router.navigate(['landlord', 'properties']);
       }
     });
@@ -168,6 +171,7 @@ export class PropertiesCreateComponent {
     });
     this.dialogDynamicRef.close(newListing.value?.publicId);
     this.userService.fetchUserData(true);
+    this.landlordListingService.resetListingCreation();
   }
 
   public onCreateError() {

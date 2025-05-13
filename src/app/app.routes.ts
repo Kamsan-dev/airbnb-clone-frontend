@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authorityRouteAccess } from './core/authority-route-access.guard';
 import { HomeComponent } from './home/home.component';
+import { DisplayListingComponent } from './tenant/display-listing.component';
 
 export const routes: Routes = [
   {
@@ -14,5 +15,10 @@ export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+  },
+
+  {
+    path: 'listing',
+    component: DisplayListingComponent,
   },
 ];

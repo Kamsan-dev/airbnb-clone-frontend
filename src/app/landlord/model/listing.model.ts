@@ -9,6 +9,11 @@ export interface NewListingInfo {
   baths: BathsVo;
 }
 
+export interface Description {
+  title: TitleVo;
+  description: DescriptionVo;
+}
+
 export interface newListing {
   category: CategoryName;
   location: string;
@@ -18,14 +23,10 @@ export interface newListing {
   price: PriceVo;
 }
 
-export interface Description {
-  title: TitleVo;
-  description: DescriptionVo;
-}
-
 export interface CreatedListing {
   publicId: string;
 }
+
 export interface DisplayCardListing {
   price: PriceVo;
   location: string;
@@ -33,4 +34,19 @@ export interface DisplayCardListing {
   bookingCategory: CategoryName;
   publicId: string;
   loading: boolean;
+}
+
+export interface Listing {
+  category: CategoryName;
+  location: string;
+  infos: NewListingInfo;
+  pictures: Array<DisplayPicture>;
+  description: Description;
+  price: PriceVo;
+  landlord: LandlordListing;
+}
+
+export interface LandlordListing {
+  firstName: string;
+  imageUrl: string;
 }

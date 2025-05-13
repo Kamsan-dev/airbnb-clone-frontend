@@ -47,7 +47,7 @@ export class CardListingComponent {
       const listing = this.listing();
       this.countryService.getCountryByCode(listing.location).subscribe({
         next: (country: Country) => {
-          if (listing) {
+          if (listing && country) {
             this.listing().location = country.region + ', ' + country.name.common;
             this.ref.markForCheck();
           }
