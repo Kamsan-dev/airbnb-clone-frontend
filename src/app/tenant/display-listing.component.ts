@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TenantListingService } from './tenant-listing-service.service';
 import { ToastService } from '../layout/toast.service';
@@ -11,11 +11,12 @@ import { DisplayPicture } from '../landlord/model/picture.model';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AvatarComponent } from '../layout/avatar/avatar.component';
 import { CommonModule } from '@angular/common';
+import { BookDateComponent } from './book-date/book-date.component';
 
 @Component({
   selector: 'app-display-listing',
   standalone: true,
-  imports: [FontAwesomeModule, AvatarComponent, CommonModule],
+  imports: [FontAwesomeModule, AvatarComponent, CommonModule, BookDateComponent],
   templateUrl: './display-listing.component.html',
   styleUrl: './display-listing.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,6 +27,7 @@ export class DisplayListingComponent implements OnInit, OnDestroy {
   toastService = inject(ToastService);
   categoryService = inject(CategoryService);
   countryService = inject(CountryService);
+  ref = inject(ChangeDetectorRef);
 
   listing: Listing | undefined;
   category: Category | undefined;
@@ -50,6 +52,7 @@ export class DisplayListingComponent implements OnInit, OnDestroy {
             next: (country) => {
               if (this.listing) {
                 this.listing.location = country.region + ', ' + country.name.common;
+                this.ref.markForCheck();
               }
             },
           });

@@ -1,20 +1,20 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
-import { FaIconComponent, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { fontAwesomeIcons } from './shared/font-awesome-icons';
-import { NavbarComponent } from './layout/navbar/navbar.component';
-import { FooterComponent } from './layout/footer/footer.component';
 import { ToastModule } from 'primeng/toast';
+import { FooterComponent } from './layout/footer/footer.component';
+import { NavbarComponent } from './layout/navbar/navbar.component';
 import { ToastService } from './layout/toast.service';
-import { MessageService } from 'primeng/api';
+import { fontAwesomeIcons } from './shared/font-awesome-icons';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   providers: [MessageService],
-  imports: [RouterOutlet, ButtonModule, CalendarModule, FaIconComponent, NavbarComponent, FooterComponent, ToastModule],
+  imports: [RouterOutlet, ButtonModule, CalendarModule, NavbarComponent, FooterComponent, ToastModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
