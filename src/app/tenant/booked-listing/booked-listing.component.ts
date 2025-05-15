@@ -78,6 +78,6 @@ export class BookedListingComponent implements OnInit, OnDestroy {
 
   onCancelBooking(bookedListing: BookedListing): void {
     bookedListing.loading = true;
-    this.bookingService.cancel(bookedListing.bookingPublicId, bookedListing.listingPublicId);
+    this.bookingService.cancel(bookedListing.bookingPublicId, bookedListing.listingPublicId, false);
   }
 }

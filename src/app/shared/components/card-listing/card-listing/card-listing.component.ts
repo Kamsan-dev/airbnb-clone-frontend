@@ -25,7 +25,7 @@ export class CardListingComponent {
 
   bookingListing: WritableSignal<BookedListing | undefined> = signal(undefined);
   cardListing: WritableSignal<DisplayCardListing | undefined> = signal(undefined);
-  publicId: string | undefined; // publicId of the current listing (booking or landlord listing)
+  publicId: string | undefined; // publicId of the current listing
 
   router = inject(Router);
   categoryService = inject(CategoryService);
@@ -62,7 +62,7 @@ export class CardListingComponent {
         const cardMode = this.cardMode();
         if (cardMode && cardMode === 'booking') {
           this.bookingListing.set(this.listing() as BookedListing);
-          this.publicId = this.bookingListing()?.bookingPublicId!;
+          this.publicId = this.bookingListing()?.listingPublicId!;
         } else {
           this.cardListing.set(this.listing() as DisplayCardListing);
           this.publicId = this.cardListing()?.publicId!;

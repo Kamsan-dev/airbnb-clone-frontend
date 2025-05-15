@@ -26,4 +26,12 @@ export const routes: Routes = [
     path: 'booking',
     component: BookedListingComponent,
   },
+  {
+    path: 'landlord/reservation',
+    loadComponent: () => import('./landlord/reservation/reservation.component').then((m) => m.ReservationComponent),
+    canActivate: [authorityRouteAccess],
+    data: {
+      authorities: ['ROLE_LANDLORD'],
+    },
+  },
 ];
