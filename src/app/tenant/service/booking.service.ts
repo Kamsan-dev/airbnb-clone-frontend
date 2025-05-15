@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { computed, inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { State } from '../../core/model/state.mode';
-import { BookedDatesDTOFromClient, BookedDatesDTOFromServer, newBookingListing } from '../model/booking.model';
+import { BookedDatesDTOFromClient, BookedDatesDTOFromServer, BookedListing, newBookingListing } from '../model/booking.model';
 import { environment } from '../../../environments/environment.development';
 import { map } from 'rxjs';
 import dayjs from 'dayjs';
@@ -17,6 +17,12 @@ export class BookingService {
 
   private checkAvailability$: WritableSignal<State<Array<BookedDatesDTOFromClient>>> = signal(State.Builder<Array<BookedDatesDTOFromClient>>().forInit());
   public checkAvailibilitySig = computed(() => this.checkAvailability$());
+
+  private getBookedListing$: WritableSignal<State<Array<BookedListing>>> = signal(State.Builder<Array<BookedListing>>().forInit());
+  public getBookedListingSig = computed(() => this.getBookedListing$());
+
+  private cancel$: WritableSignal<State<string>> = signal(State.Builder<string>().forInit());
+  public cancelSig = computed(() => this.cancel$());
 
   constructor() {}
 
@@ -55,5 +61,29 @@ export class BookingService {
       startDate: dayjs(dates.startDate),
       endDate: dayjs(dates.endDate),
     }));
+  }
+
+  getBookedListing(): void {
+    this.http.get<Array<BookedListing>>(`${environment.API_URL}/booking/get-booked-listing`).subscribe({
+      next: (response: Array<BookedListing>) => {
+        this.getBookedListing$.set(State.Builder<Array<BookedListing>>().forSuccess(response));
+      },
+      error: (error: HttpErrorResponse) => {
+        this.getBookedListing$.set(State.Builder<Array<BookedListing>>().forError(error));
+      },
+    });
+  }
+
+  cancel(bookingPublicId: string, listingPublicId: string): void {
+    const params = new HttpParams().set('bookingPublicId', bookingPublicId).set('listingPublicId', listingPublicId);
+    // .set("byLandlord", byLandlord);
+    this.http.delete<string>(`${environment.API_URL}/booking/cancel`, { params }).subscribe({
+      next: (canceledPublicId) => this.cancel$.set(State.Builder<string>().forSuccess(canceledPublicId)),
+      error: (err) => this.cancel$.set(State.Builder<string>().forError(err)),
+    });
+  }
+
+  resetCancel(): void {
+    this.cancel$.set(State.Builder<string>().forInit());
   }
 }

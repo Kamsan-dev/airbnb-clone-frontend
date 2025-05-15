@@ -1,10 +1,10 @@
 import { Location } from '@angular/common';
 import { HttpClient, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { computed, inject, Injectable, signal, WritableSignal } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment.development';
 import { State } from './model/state.mode';
 import { User } from './model/user.model';
-import { environment } from '../../environments/environment.development';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

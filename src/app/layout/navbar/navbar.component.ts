@@ -11,7 +11,6 @@ import { User } from '../../core/model/user.model';
 import { PropertiesCreateComponent } from '../../landlord/properties-create/properties-create.component';
 import { AvatarComponent } from '../avatar/avatar.component';
 import { CategoryComponent } from '../category/category.component';
-import { ToastService } from '../toast.service';
 
 @Component({
   selector: 'app-navbar',
@@ -47,7 +46,7 @@ export class NavbarComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.authService.fetchUserData(true);
+    this.authService.fetchUserData(false);
   }
 
   private loadMenu(): any {

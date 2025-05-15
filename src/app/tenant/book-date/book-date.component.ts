@@ -45,7 +45,7 @@ export class BookDateComponent implements OnInit, OnDestroy {
           severity: 'success',
           detail: 'Booking created successfully',
         });
-        //this.router.navigate(['/booking']);
+        this.router.navigate(['/booking']);
       } else if (createBookingState.status === 'ERROR') {
         this.toastService.send({
           severity: 'error',
