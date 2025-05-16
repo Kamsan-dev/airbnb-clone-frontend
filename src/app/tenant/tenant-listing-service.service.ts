@@ -5,6 +5,8 @@ import { State } from '../core/model/state.mode';
 import { DisplayCardListing, Listing } from '../landlord/model/listing.model';
 import { CategoryName } from '../layout/category/category.model';
 import { environment } from '../../environments/environment.development';
+import { Subject } from 'rxjs';
+import { Search } from './model/search.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +16,9 @@ export class TenantListingService {
 
   private getAllByCategory$: WritableSignal<State<Page<DisplayCardListing>>> = signal(State.Builder<Page<DisplayCardListing>>().forInit());
   public getAllByCategorySig = computed(() => this.getAllByCategory$());
+
+  private search$: Subject<State<Page<DisplayCardListing>>> = new Subject();
+  public searchObs = this.search$.asObservable();
 
   private getOne$: WritableSignal<State<Listing>> = signal(State.Builder<Listing>().forInit());
   public getOneSig = computed(() => this.getOne$());
@@ -51,5 +56,15 @@ export class TenantListingService {
     this.getOne$.set(State.Builder<Listing>().forInit());
   }
 
-  constructor() {}
+  searchListing(newSearch: Search, pageRequest: Pagination): void {
+    let params = createPaginationOption(pageRequest);
+    this.http.post<Page<DisplayCardListing>>(`${environment.API_URL}/tenant-listing/search`, newSearch, { params }).subscribe({
+      next: (listings: Page<DisplayCardListing>) => {
+        this.search$.next(State.Builder<Page<DisplayCardListing>>().forSuccess(listings));
+      },
+      error: (error: HttpErrorResponse) => {
+        this.search$.next(State.Builder<Page<DisplayCardListing>>().forError(error));
+      },
+    });
+  }
 }

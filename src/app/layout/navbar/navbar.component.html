@@ -4,17 +4,20 @@
       <fa-icon [icon]="['fab', 'airbnb']" size="3x" class="text-primary"></fa-icon>
       <div class="font-bold text-primary pl-2 text-2xl">airbnb</div>
     </div>
-    <div class="p-toolbar-group-center bg-white rounded-3xl p-0 border-toolbar shadow sm:hover:shadow-md items-center gap-4 flex justify-around">
+    <div
+      class="p-toolbar-group-center bg-white rounded-3xl p-0 border-toolbar shadow sm:hover:shadow-md items-center gap-4 flex justify-around"
+      (click)="openNewSearch($event)"
+    >
       <button class="p-button rounded-l-3xl rounded-r-none border-r-0 border-0 bg-white text-gray-800 focus:shadow-none">
-        {{ location }}
+        {{ location() }}
       </button>
       <div class="separator"></div>
       <button class="p-button border-0 rounded-none bg-white text-dark focus:shadow-none">
-        {{ dates }}
+        {{ dates() }}
       </button>
       <div class="separator"></div>
       <button class="p-button guest-btn border-0 rounded-r-3xl bg-white focus:shadow-none text-gray-400 p-2">
-        <div>{{ guests }}</div>
+        <div>{{ guests() }}</div>
       </button>
       <button class="mr-2 p-button search-icon flex items-center justify-center">
         <fa-icon [icon]="'search'" class="text-sm"></fa-icon>

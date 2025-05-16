@@ -5,10 +5,12 @@ import { CategoryService } from '../layout/category/category.service';
 import { Pagination } from '../core/model/request.model';
 import { DisplayCardListing } from '../landlord/model/listing.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { Category } from '../layout/category/category.model';
 import { CardListingComponent } from '../shared/components/card-listing/card-listing/card-listing.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { Search } from '../tenant/model/search.model';
+import dayjs from 'dayjs';
 
 @Component({
   selector: 'app-home',
@@ -31,8 +33,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   categoryServiceSub: Subscription | undefined;
 
+  private searchSubscription: Subscription | undefined;
+  emptySearch = signal(false);
+  searchIsLoading = signal(false);
+
   constructor() {
     this.listenToGetAllCategory();
+    this.listenToSearch();
   }
 
   ngOnDestroy(): void {
@@ -40,14 +47,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.categoryServiceSub) {
       this.categoryServiceSub.unsubscribe();
     }
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
   }
   ngOnInit(): void {
+    this.startNewSearch();
     this.listenToChangeCategory();
   }
   private listenToChangeCategory() {
     this.categoryServiceSub = this.categoryService.changeCategoryObs.subscribe({
       next: (category: Category) => {
-        this.tenantListingService.getAllByCategory(this.pageRequest, category.technicalName);
+        this.loading.set(true);
+        if (!this.searchIsLoading()) {
+          this.tenantListingService.getAllByCategory(this.pageRequest, category.technicalName);
+        }
       },
     });
   }
@@ -70,5 +84,57 @@ export class HomeComponent implements OnInit, OnDestroy {
       },
       { allowSignalWrites: true }
     );
+  }
+
+  private startNewSearch(): void {
+    this.activatedRoute.queryParams.pipe(filter((params) => params['location'])).subscribe({
+      next: (params) => {
+        this.loading.set(true);
+        this.searchIsLoading.set(true);
+        const newSearch: Search = {
+          dates: {
+            startDate: dayjs(params['startDate']).toDate(),
+            endDate: dayjs(params['endDate']).toDate(),
+          },
+          infos: {
+            guests: { value: params['guests'] },
+            bedrooms: { value: params['bedrooms'] },
+            beds: { value: params['beds'] },
+            baths: { value: params['baths'] },
+          },
+          location: params['location'],
+        };
+
+        this.tenantListingService.searchListing(newSearch, this.pageRequest);
+      },
+    });
+  }
+
+  private listenToSearch() {
+    this.searchSubscription = this.tenantListingService.searchObs.subscribe({
+      next: (searchState) => {
+        if (searchState.status === 'OK') {
+          this.loading.set(false);
+          this.searchIsLoading.set(false);
+          this.listings.set(searchState.value?.content);
+          this.emptySearch.set(this.listings()?.length === 0);
+        } else if (searchState.status === 'ERROR') {
+          this.loading.set(false);
+          this.searchIsLoading.set(false);
+          this.toastService.send({
+            severity: 'error',
+            summary: 'Error when search listing',
+          });
+        }
+      },
+    });
+  }
+
+  onResetSearchFilter() {
+    this.router.navigate(['/'], {
+      queryParams: { category: this.categoryService.getCategoryByDefault().technicalName },
+    });
+    this.loading.set(true);
+    this.emptySearch.set(false);
   }
 }

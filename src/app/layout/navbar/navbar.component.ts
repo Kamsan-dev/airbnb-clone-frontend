@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, effect, inject, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -11,6 +11,8 @@ import { User } from '../../core/model/user.model';
 import { PropertiesCreateComponent } from '../../landlord/properties-create/properties-create.component';
 import { AvatarComponent } from '../avatar/avatar.component';
 import { CategoryComponent } from '../category/category.component';
+import { SearchComponent } from '../../tenant/search/search/search.component';
+import dayjs from 'dayjs';
 
 @Component({
   selector: 'app-navbar',
@@ -22,13 +24,14 @@ import { CategoryComponent } from '../category/category.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent implements OnInit {
-  public location: string = 'Anywhere';
-  public guests: string = 'Add guests';
-  public dates: string = 'Any week';
+  public location = signal('Anywhere');
+  public guests = signal('Add guests');
+  public dates = signal('Any week');
 
   public authService = inject(AuthService);
   public dialogService = inject(DialogService);
   public ref: DynamicDialogRef | undefined;
+  public activatedRoute = inject(ActivatedRoute);
 
   public currentMenuItems: MenuItem[] | undefined = [];
   public user: User = { email: this.authService.notConnected };
@@ -47,6 +50,7 @@ export class NavbarComponent implements OnInit {
 
   public ngOnInit(): void {
     this.authService.fetchUserData(false);
+    this.extractInformationForSearch();
   }
 
   private loadMenu(): any {
@@ -99,6 +103,32 @@ export class NavbarComponent implements OnInit {
       focusOnShow: true,
       modal: true,
       showHeader: true,
+    });
+  }
+
+  openNewSearch(event: MouseEvent | TouchEvent): void {
+    event.stopImmediatePropagation();
+    this.ref = this.dialogService.open(SearchComponent, {
+      width: '40%',
+      header: 'Search',
+      closable: true,
+      focusOnShow: true,
+      modal: true,
+      showHeader: true,
+    });
+  }
+
+  private extractInformationForSearch(): void {
+    this.activatedRoute.queryParams.subscribe((params: any) => {
+      if (params['location']) {
+        this.location.set(params['location']);
+        this.guests.set(params['guests'] + ' guests');
+        this.dates.set(dayjs(params['startDate']).format('MMM-DD') + ' to ' + dayjs(params['endDate']).format('MMM-DD'));
+      } else {
+        this.location.set('Anywhere');
+        this.guests.set('Add guests');
+        this.dates.set('Any week');
+      }
     });
   }
 }
