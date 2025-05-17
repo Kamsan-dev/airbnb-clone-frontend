@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ToastService } from '../../layout/toast.service';
 import { BookingService } from '../../tenant/service/booking.service';
 import { BookedListing } from '../../tenant/model/booking.model';
@@ -11,6 +11,7 @@ import { CardListingComponent } from '../../shared/components/card-listing/card-
   imports: [CardListingComponent, FaIconComponent],
   templateUrl: './reservation.component.html',
   styleUrl: './reservation.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReservationComponent implements OnInit, OnDestroy {
   bookingService = inject(BookingService);
