@@ -170,8 +170,8 @@ export class PropertiesCreateComponent {
       detail: 'Listing created successfully.',
     });
     this.dialogDynamicRef.close(newListing.value?.publicId);
-    this.userService.fetchUserData(true);
     this.landlordListingService.resetListingCreation();
+    this.userService.renewAccessToken();
   }
 
   public onCreateError() {

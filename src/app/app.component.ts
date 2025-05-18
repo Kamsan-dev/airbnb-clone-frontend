@@ -9,6 +9,7 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { ToastService } from './layout/toast.service';
 import { fontAwesomeIcons } from './shared/font-awesome-icons';
+import { AuthService } from './core/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -25,9 +26,12 @@ export class AppComponent implements OnInit {
   private messageService = inject(MessageService);
   isListingView: boolean = true;
 
+  private authService = inject(AuthService);
+
   public ngOnInit(): void {
     this.initFontAwesome();
     this.listenToastService();
+    this.authService.initAuthentication();
   }
 
   private initFontAwesome(): void {

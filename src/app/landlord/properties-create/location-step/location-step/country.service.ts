@@ -3,6 +3,7 @@ import { computed, inject, Injectable, signal, WritableSignal } from '@angular/c
 import { catchError, map, Observable, of, shareReplay, tap } from 'rxjs';
 import { State } from '../../../../core/model/state.mode';
 import { Country } from './country.model';
+import { environment } from '../../../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,7 @@ export class CountryService {
   }
 
   initFetchGetAllCountries(): void {
-    (this.fetchCountry$ = this.http.get<Array<Country>>('/assets/countries.json').pipe(
+    (this.fetchCountry$ = this.http.get<Array<Country>>(`${environment.BACKEND_URL}/assets/countries.json`).pipe(
       tap((countries: Country[]) => {
         this.countries$.set(State.Builder<Array<Country>>().forSuccess(countries));
       })

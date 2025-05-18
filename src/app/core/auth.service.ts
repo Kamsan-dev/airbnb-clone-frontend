@@ -1,11 +1,11 @@
 import { Location } from '@angular/common';
 import { HttpClient, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { computed, inject, Injectable, signal, WritableSignal } from '@angular/core';
-import { Observable } from 'rxjs';
+import { filter, Observable, switchMap } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { State } from './model/state.mode';
 import { User } from './model/user.model';
-
+import { AuthService as Auth0Service } from '@auth0/auth0-angular';
 @Injectable({
   providedIn: 'root',
 })
@@ -14,10 +14,13 @@ export class AuthService {
 
   public location = inject(Location);
 
+  private auth0Service = inject(Auth0Service);
+
   public notConnected = 'NOT_CONNECTED';
 
   private fetchUser$: WritableSignal<State<User>> = signal(State.Builder<User>().forSuccess({ email: this.notConnected }));
   public fetchUser = computed(() => this.fetchUser$());
+  accessToken: string | undefined = undefined;
 
   /* Get info of the authenticated user */
   public fetchUserData(forceResync: boolean): void {
@@ -34,17 +37,31 @@ export class AuthService {
     });
   }
 
-  public login(): void {
-    location.href = `${location.origin}${this.location.prepareExternalUrl('oauth2/authorization/okta')}`;
+  login(): void {
+    this.auth0Service.loginWithRedirect();
   }
 
-  public logout(): void {
-    this.http.post(`${environment.API_URL}/auth/logout`, {}).subscribe({
-      next: (response: any) => {
-        this.fetchUser$.set(State.Builder<User>().forSuccess({ email: this.notConnected }));
-        location.href = response.logoutUrl;
-      },
+  renewAccessToken(): void {
+    this.auth0Service.getAccessTokenSilently({ cacheMode: 'off' }).subscribe((token) => {
+      this.accessToken = token;
+      this.fetchUserData(true);
     });
+  }
+
+  initAuthentication(): void {
+    this.auth0Service.isAuthenticated$
+      .pipe(
+        filter((isLoggedIn) => isLoggedIn),
+        switchMap(() => this.auth0Service.getAccessTokenSilently())
+      )
+      .subscribe((token) => {
+        this.accessToken = token;
+        this.fetchUserData(false);
+      });
+  }
+
+  logout(): void {
+    this.auth0Service.logout();
   }
 
   public isAuthenticated(): boolean {

@@ -49,7 +49,6 @@ export class NavbarComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.authService.fetchUserData(false);
     this.extractInformationForSearch();
   }
 
