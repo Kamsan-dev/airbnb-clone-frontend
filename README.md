@@ -1,27 +1,58 @@
-# AirbnbCloneFrontend
+# Airbnb clone application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.11.
+Web application : https://airbnb-clone-kamsan.duckdns.org
+⚠️ _Note: The demo might be down occasionally depending on server availability._
 
-## Development server
+### Key Features:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- 📅 Booking management for travelers
+- 🏠 Landlord reservation management
+- 🔍 Search for houses by criteria (location, date, guests, beds, etc)
+- 🔐 Authentication and Authorization (Role management) with Auth0 (OAuth2)
+- 🏢 Domain-driven design
 
-## Code scaffolding
+## 🛠️ Tech Stack
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Framework: Angular 17
 
-## Build
+- Server : Spring Boot 3.3
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- UI Library: PrimeNG 17
 
-## Running unit tests
+- CSS Framework: Tailwind CSS
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Database : PostgresSQL
 
-## Running end-to-end tests
+- API Communication: RESTful API integration
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 💻 UI Preview
 
-## Further help
+#### Home
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+<p align="center">
+    <img src="./src/assets/docs/home.PNG" alt=""/>
+</p>
+
+#### Register a new listing
+
+<p align="center">
+    <img src="./src/assets/docs/create-listing.PNG" alt=""/>
+</p>
+
+#### Landlord properties
+
+<p align="center">
+    <img src="./src/assets/docs/properties-landlord.PNG.PNG" alt=""/>
+</p>
+
+#### Book a listing
+
+<p align="center">
+    <img src="./src/assets/docs/reservation.PNG" alt=""/>
+</p>
+
+#### Search by criteria
+
+<p align="center">
+    <img src="./src/assets/docs/search.PNG" alt=""/>
+</p>
